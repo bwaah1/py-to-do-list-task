@@ -15,5 +15,7 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'status', 'deadline', 'tags']
         widgets = {
-            'tags': forms.CheckboxSelectMultiple(),
+            'tags': forms.CheckboxSelectMultiple,
+            'name': forms.TextInput(attrs={'placeholder': 'Enter task name'}),
+            'status': forms.Select(choices=Task.STATUS_CHOICES),
         }

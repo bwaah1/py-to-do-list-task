@@ -2,13 +2,38 @@
 {% block content %}
   <h1>Tag List <a href={% url "tasks:tag-create" %}>+</a></h1>
   {% if tag_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
       {% for tag in tag_list %}
-        <li>
-          {{ tag.name }}
-        </li>
+        <tr>
+          <td>
+            {{ tag.id }}
+          </td>
+          <td>
+            {{ tag.name }}
+          </td>
+
+          <td>
+            <a href="{% url 'tasks:tag-update' pk=tag.id %}">
+              Update
+            </a>
+          </td>
+          <td>
+            <a style="color: red"
+               href="{% url 'tasks:tag-delete' pk=tag.id %}">
+              Delete
+            </a>
+          </td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
+
   {% else %}
     <p>There are no tags in list</p>
   {% endif %}

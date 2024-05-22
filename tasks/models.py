@@ -9,20 +9,17 @@ class Tag(models.Model):
 
 
 class Task(models.Model):
-    choices = (
+    STATUS_CHOICES = (
         ("DONE", "Done"),
         ("NOT DONE", "Not done"),
     )
     name = models.CharField(max_length=255, unique=True)
-    status = models.CharField(max_length=8, choices=choices)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES)
     deadline = models.DateTimeField()
-    tags = models.ManyToManyField(Tag, related_name="tags")
+    tags = models.ForeignKey(Tag, blank=True, null=True, related_name="tasks", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name} ({self.status}, {self.get_deadline_display()}, {self.get_tags_display()})"
+        return f"{self.name} ({self.status}, {self.get_deadline_display()})"
 
     def get_deadline_display(self):
         return format(self.deadline, 'd.m.Y H:i')
-
-    def get_tags_display(self):
-        return ", ".join(tag.name for tag in self.tags.all())

@@ -2,15 +2,24 @@
 {% block content %}
   <h1>TODO List <a href={% url "tasks:task-create" %}>+</a></h1>
   {% if task_list %}
-    <ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Deadline</th>
+        <th>Tags</th>
+      </tr>
       {% for task in task_list %}
-        <li>
-          <a href="{% url "tasks:task-detail" pk=task.id %}">{{ task.id }}</a>
-          {{ task.name }}
-        </li>
-
+        <tr>
+          <td>{{ task.id }}</td>
+          <td>{{ task.name }}</td>
+          <td>{{ task.status }}</td>
+          <td>{{ task.deadline }}</td>
+          <td>{{ task.tags }}</td>
+        </tr>
       {% endfor %}
-    </ul>
+    </table>
   {% else %}
     <p>There are no tasks in list</p>
   {% endif %}
